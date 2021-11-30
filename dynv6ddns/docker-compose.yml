@@ -1,0 +1,10 @@
+version: "2"
+  services: 
+    dyddns:
+      volumes: 
+        - "${PWD}:/app"
+      container_name: "dyddns"
+      build: .
+      restart: aways
+      environment: 
+        - "TZ=Asia/Shanghai"
