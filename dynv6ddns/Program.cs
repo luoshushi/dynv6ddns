@@ -14,7 +14,7 @@ namespace dynv6ddns
         private static WebClient webClient = new WebClient();
         private static string localIp = "127.0.0.1";
         private static Timer timer = null;
-        private static IConfigurationRoot configurationRoot => new ConfigurationBuilder().AddJsonFile("appsettings.json", false, true).Build();
+     
         static void Main(string[] args)
         {
             InitLogs();
@@ -34,8 +34,18 @@ namespace dynv6ddns
         {
             try
             {
-                string token = configurationRoot["token"];
-                string hostname = configurationRoot["hostname"];
+                string token = Environment.GetEnvironmentVariable("token");// string.Empty;
+                string hostname = Environment.GetEnvironmentVariable("hostname");
+                if (string.IsNullOrEmpty(token))
+                {
+                    Log.Error("未设置token环境变量");
+                    return;
+                }
+                if (string.IsNullOrEmpty(token))
+                {
+                    Log.Error("未设置token环境变量");
+                    return;
+                }
                 string[] hostnames = hostname.Split(',');
                 string ipaddress = webClient.DownloadString("https://api.ipify.org");
                 if (localIp != ipaddress)
