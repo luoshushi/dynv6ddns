@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "dynv6ddns": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
