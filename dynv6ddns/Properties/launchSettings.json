@@ -1,10 +1,14 @@
 {
   "profiles": {
     "dynv6ddns": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "environmentVariables": {
+        "token": "xxx",
+        "hostname": "xxx,ddd"
+      }
     },
     "Docker": {
       "commandName": "Docker"
     }
-  }
+  }  
 }

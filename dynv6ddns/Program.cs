@@ -14,21 +14,26 @@ namespace dynv6ddns
         private static WebClient webClient = new WebClient();
         private static string localIp = "127.0.0.1";
         private static Timer timer = null;
-     
+
         static void Main(string[] args)
         {
             InitLogs();
             Log.Information("Program start at {datetime}", DateTime.Now);
             var autoEvent = new AutoResetEvent(false);
-            timer = new Timer(Run, autoEvent, 0, 10 * 60 * 1000);
+            timer = new Timer(Run, autoEvent, 0, 10 * 1000 * 60);
+
             autoEvent.WaitOne();
+
         }
+
+
+
         private static void InitLogs()
         {
             Serilog.Log.Logger = new LoggerConfiguration()
-            .Enrich.WithProperty("ProgramName","dyddns")
-            .WriteTo.Console( outputTemplate:"[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u4}] {Message:lj}{NewLine}{Exception}")
-            .WriteTo.File("logs/logs_.txt", rollingInterval: RollingInterval.Day).CreateLogger();
+            .Enrich.WithProperty("ProgramName", "dyddns")
+            .WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u4}] {Message:lj}{NewLine}{Exception}")
+            .WriteTo.File("logs/logs_.txt", rollingInterval: RollingInterval.Day, flushToDiskInterval: TimeSpan.Zero).CreateLogger();
         }
         private static void Run(object state)
         {
@@ -62,7 +67,7 @@ namespace dynv6ddns
             }
             catch (Exception ex)
             {
-                Log.Error(ex,ex.ToString());
+                Log.Error(ex, ex.ToString());
             }
         }
     }
