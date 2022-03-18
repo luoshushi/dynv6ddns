@@ -6,9 +6,20 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Formatting.Compact;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace dynv6ddns
 {
+    public enum ProtectionType
+    {
+        [Description("比赛详情")]
+        MatchDetail = 1,
+        [Description("直播")]
+        Live = 2,
+        [Description("集锦回放")]
+        Video = 4
+    }
     class Program
     {
         private static WebClient webClient = new WebClient();
@@ -46,9 +57,9 @@ namespace dynv6ddns
                     Log.Error("未设置token环境变量");
                     return;
                 }
-                if (string.IsNullOrEmpty(token))
+                if (string.IsNullOrEmpty(hostname))
                 {
-                    Log.Error("未设置token环境变量");
+                    Log.Error("未设置hostname环境变量");
                     return;
                 }
                 string[] hostnames = hostname.Split(',');
